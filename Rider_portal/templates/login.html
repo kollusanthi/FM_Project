@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FreshMeat | Rider Login</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='portal_theme.css') }}">
+<style>
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 24px 16px;
+  background:
+    radial-gradient(circle at 12% 18%, rgba(200, 120, 67, 0.13), transparent 36%),
+    radial-gradient(circle at 88% 82%, rgba(36, 75, 55, 0.13), transparent 40%),
+    var(--cream);
+}
+
+.login-box {
+  width: 430px;
+  max-width: 100%;
+  background: var(--white);
+  padding: 36px 34px;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  box-shadow: 0 16px 38px rgba(23, 55, 40, 0.12);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding-bottom: 0;
+  margin-bottom: 14px;
+  border-bottom: none;
+}
+
+.logo-icon {
+  width: 46px;
+  height: 46px;
+  background: linear-gradient(135deg, var(--orange), #d98e59);
+  color: var(--white);
+  border-radius: 13px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 23px;
+  font-weight: 700;
+  box-shadow: 0 6px 16px rgba(200, 120, 67, 0.32);
+}
+
+.logo-text h1 {
+  margin: 0;
+  font-family: 'Playfair Display', Georgia, serif;
+  color: var(--green-dark);
+  font-size: 26px;
+}
+
+.logo-text span {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: var(--muted);
+}
+
+.subtitle {
+  text-align: center;
+  color: var(--muted);
+  margin-bottom: 22px;
+  font-size: 13.5px;
+}
+
+h2 {
+  font-family: 'Playfair Display', Georgia, serif;
+  color: var(--green-dark);
+  text-align: center;
+  font-size: 22px;
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+  margin: 16px 0 7px;
+}
+
+input {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  outline: none;
+  font-size: 14px;
+  background: var(--white);
+}
+
+input:focus {
+  border-color: var(--green);
+  box-shadow: 0 0 0 3px rgba(36, 75, 55, 0.12);
+}
+
+button {
+  width: 100%;
+  padding: 13px;
+  margin-top: 22px;
+  border: none;
+  border-radius: 10px;
+  background: var(--green);
+  color: var(--white);
+  font-size: 15px;
+  font-weight: 700;
+  justify-content: center;
+  box-shadow: 0 6px 16px rgba(36, 75, 55, 0.22);
+}
+
+button:hover {
+  background: var(--green-dark);
+}
+
+.message {
+  background: #fbeceb;
+  color: #b83b32;
+  padding: 10px 12px;
+  border-radius: 8px;
+  font-size: 13px;
+  margin-bottom: 12px;
+}
+
+.register-link {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 13.5px;
+  color: var(--muted);
+}
+
+.register-link a {
+  color: var(--orange);
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.register-link a:hover {
+  text-decoration: underline;
+}
+</style>
+</head>
+<body>
+
+<!-- BIKE RIDING INTRO SPLASH (LEFT TO RIGHT -> OPENS WEBSITE) -->
+<div id="fmBikeSplash" class="fm-bike-splash" aria-hidden="true">
+  <div class="fm-splash-brand">
+    <div class="fm-splash-badge">F</div>
+    <div class="fm-splash-title">FreshMeat</div>
+  </div>
+  <div class="fm-splash-sub">Delivery Partner Portal &bull; Express Dispatch</div>
+
+  <div class="fm-road-stage">
+    <div class="fm-road-line"></div>
+    <div class="fm-road-dashes"></div>
+
+    <div class="fm-bike-runner">
+      <svg class="fm-bike-svg" viewBox="0 0 240 130" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <g class="fm-speed-streak" stroke="#f3b587" stroke-width="2.5" stroke-linecap="round">
+          <line x1="6" y1="54" x2="36" y2="54"/>
+          <line x1="14" y1="68" x2="46" y2="68"/>
+          <line x1="2" y1="82" x2="30" y2="82" stroke="#f8f6ef" opacity="0.7"/>
+        </g>
+        <!-- FreshMeat Insulated Delivery Box -->
+        <rect x="48" y="42" width="42" height="34" rx="7" fill="#c87843" stroke="#f8f6ef" stroke-width="2"/>
+        <rect x="53" y="48" width="32" height="10" rx="3" fill="#173728"/>
+        <text x="69" y="55.5" fill="#f8f6ef" font-size="6.5" font-weight="800" text-anchor="middle" font-family="sans-serif">FRESH</text>
+        <!-- Rider Body & Jacket -->
+        <path d="M98 44 C106 42, 118 47, 124 58 L116 74 L94 72 Z" fill="#f8f6ef"/>
+        <path d="M114 50 L142 56" stroke="#f8f6ef" stroke-width="6.5" stroke-linecap="round"/>
+        <circle cx="144" cy="56" r="3.5" fill="#c87843"/>
+        <path d="M98 71 L112 86 L106 102" stroke="#173728" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+        <!-- Helmet -->
+        <circle cx="111" cy="29" r="13" fill="#c87843" stroke="#f8f6ef" stroke-width="2"/>
+        <path d="M113 24 L124 27 C124 32, 119 35, 113 34 Z" fill="#173728"/>
+        <!-- Bike Frame & Fork -->
+        <path d="M68 98 L96 75 L136 75 L154 62" stroke="#e8e6dc" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M94 75 L112 96 L138 96" stroke="#c87843" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <line x1="146" y1="53" x2="174" y2="98" stroke="#f8f6ef" stroke-width="4.5" stroke-linecap="round"/>
+        <!-- Headlight Beam -->
+        <polygon points="164,56 232,42 232,76 164,64" fill="url(#fmHeadlightGrad)" opacity="0.45"/>
+        <rect x="155" y="54" width="10" height="9" rx="3" fill="#fff7d6"/>
+        <!-- Exhaust -->
+        <circle cx="38" cy="95" r="4" fill="#f8f6ef" opacity="0.45"/>
+        <circle cx="26" cy="92" r="5.5" fill="#f8f6ef" opacity="0.25"/>
+        <!-- Rear Wheel -->
+        <g class="fm-wheel-spin">
+          <circle cx="68" cy="98" r="21" fill="#173728" stroke="#f8f6ef" stroke-width="4"/>
+          <circle cx="68" cy="98" r="9" fill="#c87843"/>
+          <line x1="68" y1="79" x2="68" y2="117" stroke="#e8e6dc" stroke-width="1.8"/>
+          <line x1="49" y1="98" x2="87" y2="98" stroke="#e8e6dc" stroke-width="1.8"/>
+        </g>
+        <!-- Front Wheel -->
+        <g class="fm-wheel-spin">
+          <circle cx="174" cy="98" r="21" fill="#173728" stroke="#f8f6ef" stroke-width="4"/>
+          <circle cx="174" cy="98" r="9" fill="#c87843"/>
+          <line x1="174" y1="79" x2="174" y2="117" stroke="#e8e6dc" stroke-width="1.8"/>
+          <line x1="155" y1="98" x2="193" y2="98" stroke="#e8e6dc" stroke-width="1.8"/>
+        </g>
+        <defs>
+          <linearGradient id="fmHeadlightGrad" x1="164" y1="60" x2="232" y2="60" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#fff4c2" stop-opacity="0.9"/>
+            <stop offset="100%" stop-color="#fff4c2" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+      </svg>
+    </div>
+  </div>
+
+  <div class="fm-splash-progress">
+    <div class="fm-splash-bar"></div>
+  </div>
+</div>
+<script>
+(function() {
+  function dismissBikeSplash() {
+    var splash = document.getElementById('fmBikeSplash');
+    if (splash && !splash.classList.contains('is-done')) {
+      splash.classList.add('is-done');
+      setTimeout(function() {
+        splash.style.display = 'none';
+      }, 500);
+    }
+  }
+
+  window.addEventListener('DOMContentLoaded', function() {
+    var splash = document.getElementById('fmBikeSplash');
+    var showSplash = sessionStorage.getItem('show_bike_animation');
+
+    if (showSplash === null || showSplash === 'yes') {
+      sessionStorage.setItem('show_bike_animation', 'no');
+      
+      setTimeout(dismissBikeSplash, 1400);
+      setTimeout(dismissBikeSplash, 2000);
+    } else {
+      if (splash) {
+        splash.style.display = 'none';
+      }
+    }
+  });
+})();
+
+function triggerBikeAnimation() {
+  sessionStorage.setItem('show_bike_animation', 'yes');
+}
+</script>
+
+<div class="login-box">
+    <div class="brand">
+        <div class="logo-icon">F</div>
+        <div class="logo-text">
+            <h1>FreshMeat</h1>
+            <span>DELIVERY PORTAL</span>
+        </div>
+    </div>
+
+    <p class="subtitle">Rider Partner Portal</p>
+    <h2>Welcome Back!</h2>
+
+    {% with messages = get_flashed_messages() %}
+        {% for message in messages %}
+            <div class="message">{{ message }}</div>
+        {% endfor %}
+    {% endwith %}
+
+    <form method="POST" action="{{ url_for('login') }}">
+        <label>Username</label>
+        <input type="text" name="username" placeholder="Enter username" required>
+
+        <label>Password</label>
+        <input type="password" name="password" placeholder="Enter password" required>
+
+        <button type="submit">Login to Rider Portal</button>
+    </form>
+
+    <div class="register-link">
+        New Rider?
+        <a href="{{ url_for('register') }}">Create Account</a>
+    </div>
+</div>
+</body>
+</html>

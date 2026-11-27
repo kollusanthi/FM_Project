@@ -1,0 +1,226 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>FreshMeat | Delivery Analytics</title>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='portal_theme.css') }}">
+</head>
+
+<body>
+
+<aside class="sidebar">
+
+    <div class="brand">
+        <div class="brand-icon">F</div>
+        <div>
+            <div class="brand-name">FreshMeat</div>
+            <div class="portal">DELIVERY PORTAL</div>
+        </div>
+    </div>
+
+    <div class="nav-heading">WORKSPACE</div>
+
+    <a href="{{ url_for('rider_dashboard') }}">▦ Dashboard</a>
+
+    <a href="{{ url_for('assigned_orders') }}">▤ Assigned Orders</a>
+
+    <a href="{{ url_for('delivery_analytics') }}" class="active">
+        ▥ Delivery Analytics
+    </a>
+
+    <a href="{{ url_for('rider_dashboard') }}#profile">
+    ♙ My Profile</a>
+
+    <div class="nav-heading">ACCOUNT</div>
+    <a href="{{ url_for('order_history') }}">
+    ◷ Order History</a>
+    <a href="{{ url_for('rider_notifications') }}">
+    ♧ Notifications</a>
+
+
+    
+
+    
+
+    <div class="rider-info">
+        <strong>{{ rider.name }}</strong><br>
+        <small>Delivery Partner</small><br>
+        <small>● {{ rider.status }}</small>
+    </div>
+
+</aside>
+
+<main class="main">
+
+    <header class="topbar">
+        <h2>Delivery Analytics</h2>
+        <p style="color:#8490a2;font-size:13px">
+            Track your delivery performance and order statistics.
+        </p>
+    </header>
+
+    <section class="section">
+
+        <h2>Performance Overview</h2>
+
+        <p>Your overall delivery performance and financial statistics.</p>
+
+        <div class="analytics-summary">
+
+            <div class="analytics-card">
+                <p>Delivery Success Rate</p>
+                <h2>{{ success_rate }}%</h2>
+                <small>Percentage of all orders delivered</small>
+            </div>
+
+            <div class="analytics-card">
+                <p>Total Order Value</p>
+                <h2>₹{{ total_order_value }}</h2>
+                <small>Value of all assigned orders</small>
+            </div>
+
+            <div class="analytics-card">
+                <p>Delivered Order Value</p>
+                <h2>₹{{ delivered_value }}</h2>
+                <small>Value of completed deliveries</small>
+            </div>
+
+        </div>
+
+    </section>
+
+    <div class="charts-grid">
+
+        <div class="chart-card">
+            <h3>Order Status Distribution</h3>
+            <div class="chart-container">
+                <canvas id="orderPieChart"></canvas>
+            </div>
+        </div>
+
+        <div class="chart-card">
+            <h3>Food Items Breakdown</h3>
+            <div class="chart-container">
+                <canvas id="foodChart"></canvas>
+            </div>
+        </div>
+
+        <div class="chart-card full-chart">
+            <h3>Delivery Performance</h3>
+            <div class="chart-container">
+                <canvas id="performanceChart"></canvas>
+            </div>
+        </div>
+
+    </div>
+
+</main>
+
+<script>
+
+const orderData = {{ chart_data | tojson }};
+const foodData = {{ food_chart | tojson }};
+
+const chartColors = [
+    "#c87843",
+    "#244b37",
+    "#3a7d58",
+    "#b83b32",
+    "#173728",
+    "#d99b66",
+    "#557a66",
+    "#8c9487"
+];
+
+// ORDER STATUS CHART
+
+new Chart(document.getElementById("orderPieChart"), {
+
+    type:"doughnut",
+
+    data:{
+        labels:orderData.labels,
+        datasets:[{
+            data:orderData.values,
+            backgroundColor:chartColors,
+            borderWidth:2
+        }]
+    },
+
+    options:{
+        responsive:true,
+        maintainAspectRatio:false,
+        plugins:{
+            legend:{position:"bottom"}
+        }
+    }
+
+});
+
+// FOOD ITEMS CHART
+
+new Chart(document.getElementById("foodChart"), {
+
+    type:"pie",
+
+    data:{
+        labels:foodData.labels,
+        datasets:[{
+            data:foodData.values,
+            backgroundColor:chartColors,
+            borderWidth:2
+        }]
+    },
+
+    options:{
+        responsive:true,
+        maintainAspectRatio:false,
+        plugins:{
+            legend:{position:"bottom"}
+        }
+    }
+
+});
+
+// DELIVERY PERFORMANCE CHART
+
+new Chart(document.getElementById("performanceChart"), {
+
+    type:"bar",
+
+    data:{
+        labels:orderData.labels,
+        datasets:[{
+            label:"Number of Orders",
+            data:orderData.values,
+            backgroundColor:chartColors,
+            borderRadius:7
+        }]
+    },
+
+    options:{
+        responsive:true,
+        maintainAspectRatio:false,
+        scales:{
+            y:{
+                beginAtZero:true,
+                ticks:{precision:0}
+            }
+        },
+        plugins:{
+            legend:{display:false}
+        }
+    }
+
+});
+
+</script>
+
+</body>
+</html>

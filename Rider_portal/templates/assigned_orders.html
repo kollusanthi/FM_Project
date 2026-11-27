@@ -1,0 +1,286 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FreshMeat | Assigned Orders</title>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='portal_theme.css') }}">
+</head>
+
+<body>
+
+<!-- BIKE RIDING INTRO SPLASH (LEFT TO RIGHT -> OPENS WEBSITE) 
+<div id="fmBikeSplash" class="fm-bike-splash" aria-hidden="true">
+  <div class="fm-splash-brand">
+    <div class="fm-splash-badge">F</div>
+    <div class="fm-splash-title">FreshMeat</div>
+  </div>
+  <div class="fm-splash-sub">Delivery Partner Portal &bull; Express Dispatch</div>
+
+  <div class="fm-road-stage">
+    <div class="fm-road-line"></div>
+    <div class="fm-road-dashes"></div>
+
+    <div class="fm-bike-runner">
+      <svg class="fm-bike-svg" viewBox="0 0 240 130" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <g class="fm-speed-streak" stroke="#f3b587" stroke-width="2.5" stroke-linecap="round">
+          <line x1="6" y1="54" x2="36" y2="54"/>
+          <line x1="14" y1="68" x2="46" y2="68"/>
+          <line x1="2" y1="82" x2="30" y2="82" stroke="#f8f6ef" opacity="0.7"/>
+        </g> 
+         FreshMeat Insulated Delivery Box 
+        <rect x="48" y="42" width="42" height="34" rx="7" fill="#c87843" stroke="#f8f6ef" stroke-width="2"/>
+        <rect x="53" y="48" width="32" height="10" rx="3" fill="#173728"/>
+        <text x="69" y="55.5" fill="#f8f6ef" font-size="6.5" font-weight="800" text-anchor="middle" font-family="sans-serif">FRESH</text>
+        Rider Body & Jacket
+        <path d="M98 44 C106 42, 118 47, 124 58 L116 74 L94 72 Z" fill="#f8f6ef"/>
+        <path d="M114 50 L142 56" stroke="#f8f6ef" stroke-width="6.5" stroke-linecap="round"/>
+        <circle cx="144" cy="56" r="3.5" fill="#c87843"/>
+        <path d="M98 71 L112 86 L106 102" stroke="#173728" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+         Helmet
+        <circle cx="111" cy="29" r="13" fill="#c87843" stroke="#f8f6ef" stroke-width="2"/>
+        <path d="M113 24 L124 27 C124 32, 119 35, 113 34 Z" fill="#173728"/>
+         Bike Frame & Fork 
+        <path d="M68 98 L96 75 L136 75 L154 62" stroke="#e8e6dc" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M94 75 L112 96 L138 96" stroke="#c87843" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <line x1="146" y1="53" x2="174" y2="98" stroke="#f8f6ef" stroke-width="4.5" stroke-linecap="round"/>
+         Headlight Beam 
+        <polygon points="164,56 232,42 232,76 164,64" fill="url(#fmHeadlightGrad)" opacity="0.45"/>
+        <rect x="155" y="54" width="10" height="9" rx="3" fill="#fff7d6"/>
+         Exhaust 
+        <circle cx="38" cy="95" r="4" fill="#f8f6ef" opacity="0.45"/>
+        <circle cx="26" cy="92" r="5.5" fill="#f8f6ef" opacity="0.25"/>
+         Rear Wheel 
+        <g class="fm-wheel-spin">
+          <circle cx="68" cy="98" r="21" fill="#173728" stroke="#f8f6ef" stroke-width="4"/>
+          <circle cx="68" cy="98" r="9" fill="#c87843"/>
+          <line x1="68" y1="79" x2="68" y2="117" stroke="#e8e6dc" stroke-width="1.8"/>
+          <line x1="49" y1="98" x2="87" y2="98" stroke="#e8e6dc" stroke-width="1.8"/>
+        </g>
+         Front Wheel 
+        <g class="fm-wheel-spin">
+          <circle cx="174" cy="98" r="21" fill="#173728" stroke="#f8f6ef" stroke-width="4"/>
+          <circle cx="174" cy="98" r="9" fill="#c87843"/>
+          <line x1="174" y1="79" x2="174" y2="117" stroke="#e8e6dc" stroke-width="1.8"/>
+          <line x1="155" y1="98" x2="193" y2="98" stroke="#e8e6dc" stroke-width="1.8"/>
+        </g>
+        <defs>
+          <linearGradient id="fmHeadlightGrad" x1="164" y1="60" x2="232" y2="60" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#fff4c2" stop-opacity="0.9"/>
+            <stop offset="100%" stop-color="#fff4c2" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+      </svg>
+    </div>
+  </div>
+
+  <div class="fm-splash-progress">
+    <div class="fm-splash-bar"></div>
+  </div>
+</div>
+<script>
+(function() {
+  function dismissBikeSplash() {
+    var splash = document.getElementById('fmBikeSplash');
+    if (splash && !splash.classList.contains('is-done')) {
+      splash.classList.add('is-done');
+    }
+  }
+  window.addEventListener('DOMContentLoaded', function() {
+    setTimeout(dismissBikeSplash, 1400);
+  });
+  setTimeout(dismissBikeSplash, 2000);
+})();
+</script>
+
+-->
+
+
+<aside class="sidebar">
+
+    <div class="brand">
+        <div class="brand-icon">F</div>
+        <div>
+            <div class="brand-name">FreshMeat</div>
+            <div class="portal">DELIVERY PORTAL</div>
+        </div>
+    </div>
+
+    <div class="nav-heading">WORKSPACE</div>
+
+    <a href="{{ url_for('rider_dashboard') }}">▦ Dashboard</a>
+
+    <a href="{{ url_for('assigned_orders') }}" class="active">
+        ▤ Assigned Orders
+    </a>
+
+    <a href="{{ url_for('rider_dashboard') }}#analytics">
+        ▥ Delivery Analytics
+    </a>
+    <a href="{{ url_for('rider_profile') }}">
+    ♙ My Profile
+</a>
+
+    
+
+    <div class="nav-heading">ACCOUNT</div>
+
+    <a href="{{ url_for('order_history') }}">
+    ◷ Order History</a>
+
+    <a href="{{ url_for('rider_notifications') }}">
+    ♧ Notifications</a>
+
+    <div class="rider-info">
+        <strong>{{ rider.name }}</strong><br>
+        <small>Delivery Partner</small><br>
+        <small>● {{ rider.status }}</small>
+    </div>
+
+</aside>
+
+<main class="main">
+
+    <header class="topbar">
+        <h2>Assigned Orders</h2>
+        <p style="color:#8490a2;font-size:13px">
+            Review each order and update its delivery status.
+        </p>
+    </header>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% for category, message in messages %}
+            <div class="flash">{{ message }}</div>
+        {% endfor %}
+    {% endwith %}
+
+    <section class="section">
+
+        <h2>Assigned Orders</h2>
+        <p>Manage your pending and accepted deliveries.</p>
+
+        {% for order in orders %}
+
+        <div class="order-card">
+
+            <div class="order-header">
+                <h3>Order #{{ order.id }}</h3>
+
+                <span class="status {{ order.rider_status|lower }}">
+                    {{ order.rider_status }}
+                </span>
+            </div>
+
+            <div class="details">
+
+                <div>
+                    <small>Customer</small>
+                    <p><strong>{{ order.customer }}</strong></p>
+                </div>
+
+                <div>
+                    <small>Phone</small>
+                    <p><strong>{{ order.phone }}</strong></p>
+                </div>
+
+                <div>
+                    <small>Food</small>
+                    <p><strong>{{ order.item }}</strong></p>
+                </div>
+
+                <div>
+                    <small>Delivery Address</small>
+                    <p><strong>{{ order.address }}</strong></p>
+                </div>
+
+                <div>
+                    <small>Order Amount</small>
+                    <p><strong>₹{{ order.amount }}</strong></p>
+                </div>
+
+                <div>
+                    <small>Seller Status</small>
+                    <p><strong>{{ order.seller_status }}</strong></p>
+                </div>
+
+                <div>
+                    <small>Delivery Order Status</small>
+                    <p><strong>{{ order.rider_status }}</strong></p>
+                </div>
+
+            </div>
+
+            <div class="actions">
+
+                <a class="action-link call"
+                   href="tel:{{ order.phone }}">
+                    ☎ Call Customer
+                </a>
+
+                <a class="action-link location"
+                   target="_blank"
+                   href="https://www.google.com/maps/search/?api=1&query={{ order.address|urlencode }}">
+                    📍 View Location
+                </a>
+
+            </div>
+
+            {% if order.rider_status == "Pending" %}
+
+            <div class="actions">
+
+                <form method="POST"
+                      action="{{ url_for('accept_order', order_id=order.id) }}">
+                    <button class="accept">✓ Accept Order</button>
+                </form>
+
+                <form method="POST"
+                      action="{{ url_for('reject_order', order_id=order.id) }}">
+
+                    <input name="reason" placeholder="Rejection reason">
+
+                    <button class="reject">✕ Reject Order</button>
+                </form>
+
+            </div>
+
+            {% elif order.rider_status == "Accepted" %}
+
+            <div style="margin-top:20px">
+
+                <h4>Ready for delivery</h4>
+
+                <p>
+                    Order accepted. Complete the delivery once it reaches the customer.
+                </p>
+
+                <form method="POST"
+                      action="{{ url_for('deliver_order', order_id=order.id) }}">
+
+                    <button class="deliver"
+                        onclick="return confirm('Confirm successful delivery?')">
+                        ✓ Deliver Order
+                    </button>
+
+                </form>
+
+            </div>
+
+            {% endif %}
+
+        </div>
+
+        {% else %}
+
+        <p>No assigned orders available.</p>
+
+        {% endfor %}
+
+    </section>
+
+</main>
+
+</body>
+</html>

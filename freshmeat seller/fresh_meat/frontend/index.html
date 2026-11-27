@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FreshMeat - Seller Portal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- AUTHENTICATION -->
+<div id="authView" class="auth-container">
+    <div class="auth-card">
+        <div class="auth-brand-badge">Fresh Cut &bull; Farm Direct</div>
+        <h1>FreshMeat</h1>
+        <p class="subtitle">Seller Portal</p>
+
+        <div class="auth-tabs">
+            <button type="button" class="tab-btn active" id="loginTab">Login</button>
+            <button type="button" class="tab-btn" id="registerTab">Register</button>
+        </div>
+
+        <form id="loginForm">
+            <h2>Seller Login</h2>
+
+            <label for="loginEmail">Email Address *</label>
+            <input type="email" id="loginEmail" name="email"
+                   placeholder="Enter your email" autocomplete="username" required>
+
+            <label for="loginPassword">Password *</label>
+            <input type="password" id="loginPassword" name="password"
+                   placeholder="Enter your password"
+                   autocomplete="current-password" required>
+
+            <button type="submit" class="primary-btn">Login</button>
+            <p id="loginMessage" class="message" role="alert"></p>
+        </form>
+
+        <form id="registerForm" class="hidden">
+            <h2>Create Seller Account</h2>
+
+            <label for="sellerFullName">Full Name *</label>
+            <input type="text" id="sellerFullName" name="name"
+                   placeholder="Enter your full name" required>
+
+            <label for="shopName">Shop Name *</label>
+            <input type="text" id="shopName" name="shop"
+                   placeholder="Enter your shop name" required>
+
+            <label for="sellerPhone">Phone Number *</label>
+            <input type="tel" id="sellerPhone" name="phone"
+                   placeholder="Enter your phone number"
+                   pattern="[0-9]{10}" maxlength="10" required>
+
+            <label for="registerEmail">Email Address *</label>
+            <input type="email" id="registerEmail" name="email"
+                   placeholder="Enter your email" required>
+
+            <label for="registerPassword">Password *</label>
+            <input type="password" id="registerPassword" name="password"
+                   placeholder="Minimum 6 characters" minlength="6" required>
+
+            <label for="businessCategory">Business Category *</label>
+            <select id="businessCategory" name="category" required>
+                <option value="">Select Category</option>
+                <option value="Chicken">Chicken</option>
+                <option value="Mutton">Mutton</option>
+                <option value="Fish">Fish</option>
+                <option value="Seafood">Seafood</option>
+                <option value="Other">Other</option>
+            </select>
+
+            
+
+            <label for="fssaiNumber">FSSAI Number</label>
+            <input type="text" id="fssaiNumber" name="fssai"
+                   placeholder="Enter FSSAI number">
+
+            <label for="panNumber">PAN Number</label>
+            <input type="text" id="panNumber" name="pan"
+                   placeholder="Enter PAN number" maxlength="10">
+
+            <label for="sellerCity">City *</label>
+            <input type="text" id="sellerCity" name="city"
+                   placeholder="Enter your city" required>
+
+            <label for="sellerState">State *</label>
+            <input type="text" id="sellerState" name="state"
+                   placeholder="Enter your state" required>
+
+            <label for="sellerPincode">PIN Code *</label>
+            <input type="text" id="sellerPincode" name="pincode"
+                   placeholder="Enter 6-digit PIN code"
+                   pattern="[0-9]{6}" maxlength="6" required>
+
+            <label for="shopAddress">Shop Address *</label>
+            <textarea id="shopAddress" name="address" rows="3"
+                      placeholder="Enter complete shop address" required></textarea>
+
+            <button type="submit" class="primary-btn">Create Seller Account</button>
+            <p id="registerMessage" class="message" role="alert"></p>
+        </form>
+
+        <p class="approval-note">
+            Register your account and log in immediately after successful registration.
+        </p>
+    </div>
+</div>
+
+
+<!-- SELLER PORTAL -->
+<div id="portalView" class="portal hidden">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <div class="brand">
+            <div class="brand-mark">FM</div>
+            <div>
+                <h2>FreshMeat</h2>
+                <p>Seller Portal</p>
+            </div>
+        </div>
+
+        <nav aria-label="Seller navigation">
+            <button type="button" class="nav-btn active" data-page="dashboard">
+                <span class="nav-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/></svg>
+                </span>
+                <span>Dashboard</span>
+            </button>
+
+            <button type="button" class="nav-btn" data-page="products">
+                <span class="nav-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+                </span>
+                <span>My Products</span>
+            </button>
+
+            <button type="button" class="nav-btn" data-page="orders">
+                <span class="nav-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                </span>
+                <span>My Orders</span>
+            </button>
+
+            <!-- RIDER MANAGEMENT -->
+            <button type="button" class="nav-btn" data-page="riders">
+                <span class="nav-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="5.5" cy="17.5" r="3.5"/><circle cx="18.5" cy="17.5" r="3.5"/><path d="M15 6a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm-3 11.5V14l-3-3 4-3 2 3h2"/></svg>
+                </span>
+                <span>Rider Management</span>
+            </button>
+
+            <button type="button" class="nav-btn" data-page="returns">
+                <span class="nav-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+                </span>
+                <span>Customer Returns</span>
+            </button>
+
+            <button type="button" class="nav-btn" data-page="reviews">
+                <span class="nav-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                </span>
+                <span>Customer Reviews</span>
+            </button>
+
+            <button type="button" class="nav-btn" data-page="notifications">
+                <span class="nav-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+                </span>
+                <span>Notifications</span>
+            </button>
+
+            <button type="button" class="nav-btn" data-page="profile">
+                <span class="nav-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                </span>
+                <span>My Profile</span>
+            </button>
+        </nav>
+
+        <button type="button" id="logoutBtn" class="logout-btn">
+            Logout
+        </button>
+    </aside>
+
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+
+        <header class="topbar">
+            <div class="topbar-left">
+                <h2 id="pageTitle">Dashboard</h2>
+                <p>Welcome to your FreshMeat seller account</p>
+            </div>
+
+            <div class="topbar-right">
+                <!-- NOTIFICATION BELL -->
+                <button type="button" id="notificationBell"
+                        class="notification-bell"
+                        title="Open Notifications"
+                        aria-label="Open Notifications">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+                    <span id="bellCount" class="bell-count hidden">0</span>
+                </button>
+
+                <div class="seller-welcome">
+                    <span class="seller-dot" aria-hidden="true"></span>
+                    <span id="sellerName">Seller</span>
+                </div>
+            </div>
+        </header>
+
+
+        <!-- DASHBOARD -->
+        <section id="dashboardPage" class="page-section">
+
+            <!-- HERO BANNER: LEFT WELCOME SELLER + RIGHT MEAT CHOPPING ANIMATION -->
+            <div class="dashboard-hero">
+                <div class="hero-left">
+                    <div class="hero-badge">
+                        <span class="hero-live-dot"></span>
+                        FreshMeat Seller Studio
+                    </div>
+                    <h1 class="hero-title">
+                        Welcome Seller, <span id="heroSellerName" class="hero-seller-name">Seller</span>
+                    </h1>
+                    <p class="hero-subtitle">
+                        Keep your cuts fresh, orders moving, and customers delighted. Here is your live store overview for today.
+                    </p>
+                    <div class="hero-actions">
+                        <button type="button" class="hero-btn-primary" id="heroAddProductBtn">
+                            + Add New Cut
+                        </button>
+                        <button type="button" class="hero-btn-secondary" id="heroViewOrdersBtn">
+                            View Live Orders
+                        </button>
+                    </div>
+                </div>
+
+                <div class="hero-right" aria-label="Animated meat chopping onto a serving plate">
+                    <div class="chopping-stage">
+                        <svg class="chopping-svg" viewBox="0 0 380 210" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Meat being chopped into pieces onto a plate">
+                            <defs>
+                                <linearGradient id="boardGrad" x1="0" y1="0" x2="0" y2="1">
+                                    <stop offset="0%" stop-color="#d79b65"/>
+                                    <stop offset="100%" stop-color="#b4713c"/>
+                                </linearGradient>
+                                <linearGradient id="meatGrad" x1="0" y1="0" x2="1" y2="1">
+                                    <stop offset="0%" stop-color="#c9463d"/>
+                                    <stop offset="55%" stop-color="#a82d26"/>
+                                    <stop offset="100%" stop-color="#871f1a"/>
+                                </linearGradient>
+                                <linearGradient id="bladeGrad" x1="0" y1="0" x2="1" y2="1">
+                                    <stop offset="0%" stop-color="#f5f7f6"/>
+                                    <stop offset="60%" stop-color="#d1d8d4"/>
+                                    <stop offset="100%" stop-color="#a8b3ad"/>
+                                </linearGradient>
+                                <linearGradient id="plateGrad" x1="0" y1="0" x2="0" y2="1">
+                                    <stop offset="0%" stop-color="#ffffff"/>
+                                    <stop offset="100%" stop-color="#ebe8dc"/>
+                                </linearGradient>
+                                <filter id="softShadow" x="-20%" y="-20%" width="140%" height="140%">
+                                    <feDropShadow dx="0" dy="6" stdDeviation="5" flood-color="#0d2218" flood-opacity="0.28"/>
+                                </filter>
+                            </defs>
+
+                            <!-- Soft table surface shadow -->
+                            <ellipse cx="115" cy="178" rx="95" ry="12" fill="rgba(10, 26, 18, 0.28)"/>
+                            <ellipse cx="290" cy="176" rx="74" ry="11" fill="rgba(10, 26, 18, 0.25)"/>
+
+                            <!-- Wooden Chopping Board (Left) -->
+                            <g class="chopping-board" filter="url(#softShadow)">
+                                <rect x="20" y="138" width="176" height="30" rx="9" fill="#8f5327"/>
+                                <rect x="20" y="130" width="176" height="28" rx="9" fill="url(#boardGrad)"/>
+                                <!-- Board handle hole -->
+                                <rect x="32" y="140" width="18" height="8" rx="4" fill="#1b3d2c" opacity="0.65"/>
+                                <!-- Wood grain lines -->
+                                <path d="M62 138 H182" stroke="#a66230" stroke-width="1.5" stroke-linecap="round" opacity="0.45"/>
+                                <path d="M74 147 H172" stroke="#a66230" stroke-width="1.5" stroke-linecap="round" opacity="0.35"/>
+                            </g>
+
+                            <!-- Whole Fresh Meat Cut on Board -->
+                            <g class="meat-slab">
+                                <!-- Outer fat trim -->
+                                <path d="M62 134 C58 112, 76 96, 108 96 C134 96, 148 106, 150 124 C151 133, 144 139, 132 139 L74 139 C66 139, 63 137, 62 134 Z" fill="#f7e8dc"/>
+                                <!-- Inner lean meat -->
+                                <path d="M67 132 C64 114, 80 101, 108 101 C130 101, 143 109, 145 123 C146 131, 139 135, 130 135 L76 135 C70 135, 68 134, 67 132 Z" fill="url(#meatGrad)"/>
+                                <!-- Marbling details -->
+                                <path d="M80 116 Q96 111 112 118" stroke="#f5d5c6" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.75"/>
+                                <path d="M90 126 Q108 122 126 127" stroke="#f5d5c6" stroke-width="1.7" fill="none" stroke-linecap="round" opacity="0.65"/>
+                                <ellipse cx="122" cy="113" rx="6" ry="3.5" fill="#f7e8dc" opacity="0.85"/>
+                            </g>
+
+                            <!-- Ceramic Serving Plate (Right) -->
+                            <g class="serving-plate" filter="url(#softShadow)">
+                                <ellipse cx="290" cy="156" rx="74" ry="22" fill="#d9d5c5"/>
+                                <ellipse cx="290" cy="151" rx="74" ry="22" fill="url(#plateGrad)" stroke="#e8e6dc" stroke-width="1.5"/>
+                                <ellipse cx="290" cy="151" rx="54" ry="14" fill="none" stroke="#c87843" stroke-width="1.2" opacity="0.45"/>
+                                <!-- Fresh green herb garnish on plate -->
+                                <path d="M326 146 Q338 136 347 142 Q338 150 326 146 Z" fill="#3a7d58"/>
+                                <path d="M324 148 Q333 156 344 152 Q335 144 324 148 Z" fill="#244b37"/>
+                                <path d="M242 152 Q232 144 225 149 Q233 156 242 152 Z" fill="#3a7d58"/>
+                            </g>
+
+                            <!-- Base meat pieces already neatly plated -->
+                            <g class="plated-base">
+                                <rect x="266" y="139" width="24" height="14" rx="5" fill="#a82d26" stroke="#f7e8dc" stroke-width="1.5"/>
+                                <path d="M271 146 H285" stroke="#f5d5c6" stroke-width="1.4" stroke-linecap="round" opacity="0.75"/>
+                                <rect x="292" y="140" width="24" height="14" rx="5" fill="#b8342c" stroke="#f7e8dc" stroke-width="1.5"/>
+                                <path d="M297 147 H311" stroke="#f5d5c6" stroke-width="1.4" stroke-linecap="round" opacity="0.75"/>
+                            </g>
+
+                            <!-- Animated Chopped Meat Pieces Flying into Plate -->
+                            <g class="chopped-piece piece-1">
+                                <rect x="142" y="118" width="22" height="15" rx="5" fill="#bf3931" stroke="#f7e8dc" stroke-width="1.6"/>
+                                <path d="M147 125 Q153 122 159 126" stroke="#f5d5c6" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+                            </g>
+                            <g class="chopped-piece piece-2">
+                                <rect x="142" y="118" width="21" height="14" rx="5" fill="#a82d26" stroke="#f7e8dc" stroke-width="1.6"/>
+                                <path d="M146 125 Q152 122 158 125" stroke="#f5d5c6" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+                            </g>
+                            <g class="chopped-piece piece-3">
+                                <rect x="142" y="118" width="23" height="15" rx="5" fill="#c9463d" stroke="#f7e8dc" stroke-width="1.6"/>
+                                <path d="M147 125 Q154 123 160 126" stroke="#f5d5c6" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+                            </g>
+
+                            <!-- Impact Sparkle Lines on Chop -->
+                            <g class="chop-spark">
+                                <line x1="148" y1="108" x2="156" y2="98" stroke="#f8f6ef" stroke-width="2" stroke-linecap="round"/>
+                                <line x1="158" y1="114" x2="169" y2="110" stroke="#c87843" stroke-width="2" stroke-linecap="round"/>
+                                <line x1="136" y1="106" x2="132" y2="95" stroke="#f8f6ef" stroke-width="2" stroke-linecap="round"/>
+                            </g>
+
+                            <!-- Animated Butcher Cleaver -->
+                            <g class="cleaver-group">
+                                <!-- Wooden handle -->
+                                <rect x="184" y="42" width="44" height="13" rx="6" transform="rotate(-18 184 42)" fill="#c87843" stroke="#7d441e" stroke-width="1.5"/>
+                                <circle cx="195" cy="45" r="2" fill="#f8f6ef" opacity="0.8"/>
+                                <circle cx="211" cy="40" r="2" fill="#f8f6ef" opacity="0.8"/>
+                                <!-- Steel cleaver blade -->
+                                <path d="M126 54 L186 43 L192 84 C192 89, 186 93, 179 94 L132 98 C126 98, 123 94, 123 88 L124 58 C124 56, 125 54, 126 54 Z" fill="url(#bladeGrad)" stroke="#7a8780" stroke-width="1.4"/>
+                                <!-- Blade edge shine -->
+                                <path d="M128 92 L187 88" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" opacity="0.85"/>
+                                <!-- Cleaver hanging hole -->
+                                <circle cx="136" cy="64" r="3.5" fill="#173728" opacity="0.65"/>
+                            </g>
+                        </svg>
+                        <div class="stage-caption">Freshly Cut &bull; Plated to Order</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-heading dashboard-overview-heading">
+                <div>
+                    <h2>Dashboard Overview</h2>
+                    <p>Real-time snapshot of your inventory, orders, and revenue.</p>
+                </div>
+            </div>
+
+            <!-- MAIN STATISTICS -->
+            <div class="stats-grid">
+
+                <div class="stat-card">
+                    <div class="stat-label-row">
+                        <p>Total Products</p>
+                        <span class="stat-pill">Catalog</span>
+                    </div>
+                    <h2 id="statProducts">0</h2>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-label-row">
+                        <p>Total Orders</p>
+                        <span class="stat-pill">All Time</span>
+                    </div>
+                    <h2 id="statOrders">0</h2>
+                </div>
+
+                <div class="stat-card stat-card-accent">
+                    <div class="stat-label-row">
+                        <p>Pending Orders</p>
+                        <span class="stat-pill pill-orange">Action</span>
+                    </div>
+                    <h2 id="statPending">0</h2>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-label-row">
+                        <p>Unread Notifications</p>
+                        <span class="stat-pill">Alerts</span>
+                    </div>
+                    <h2 id="statNotifications">0</h2>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-label-row">
+                        <p>Total Revenue</p>
+                        <span class="stat-pill">Earnings</span>
+                    </div>
+                    <h2 id="statRevenue">₹0</h2>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-label-row">
+                        <p>Today's Sales</p>
+                        <span class="stat-pill">Today</span>
+                    </div>
+                    <h2 id="statTodaySales">₹0</h2>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-label-row">
+                        <p>Monthly Sales</p>
+                        <span class="stat-pill">This Month</span>
+                    </div>
+                    <h2 id="statMonthSales">₹0</h2>
+                </div>
+
+                <div class="stat-card stat-card-accent">
+                    <div class="stat-label-row">
+                        <p>Low Stock Products</p>
+                        <span class="stat-pill pill-orange">Restock</span>
+                    </div>
+                    <h2 id="statLowStock">0</h2>
+                </div>
+
+            </div>
+
+            <!-- DASHBOARD LOWER GRID -->
+            <div class="dashboard-lower-grid">
+                <!-- SALES CHART -->
+                <div class="form-card chart-card">
+                    <div class="card-header-inline">
+                        <h3>Last 7 Days Sales</h3>
+                        <span class="card-tag">Weekly Trend</span>
+                    </div>
+                    <div id="salesChart">
+                        <p>Sales chart will appear here.</p>
+                    </div>
+                </div>
+
+                <!-- LOW STOCK PRODUCTS -->
+                <div class="form-card low-stock-card">
+                    <div class="card-header-inline">
+                        <h3>Low Stock Alerts</h3>
+                        <span class="card-tag tag-orange">Inventory Watch</span>
+                    </div>
+
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Product Name</th>
+                                    <th>Category</th>
+                                    <th>Price</th>
+                                    <th>Available Quantity</th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="lowStockList">
+                                <tr>
+                                    <td colspan="4">No low stock products.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+
+
+        <!-- PRODUCTS -->
+        <section id="productsPage" class="page-section hidden">
+            <div class="section-heading">
+                <div>
+                    <h2>My Products</h2>
+                    <p>Manage your fresh cuts, pricing, offers, and stock levels.</p>
+                </div>
+                <button type="button" id="showProductFormBtn" class="primary-btn">
+                    + Add Product
+                </button>
+            </div>
+
+            <div id="productFormContainer" class="form-card hidden">
+                <h3 id="productFormTitle">Add New Product</h3>
+
+                <form id="productForm" enctype="multipart/form-data">
+                    <input type="hidden" name="product_id">
+
+                    <label for="productName">Product Name *</label>
+                    <input type="text" id="productName" name="name"
+                           placeholder="Enter product name" required>
+
+                    <label for="productCategory">Category *</label>
+                    <select id="productCategory" name="category" required>
+                        <option value="">Select Category</option>
+                        <option value="Chicken">Chicken</option>
+                        <option value="Mutton">Mutton</option>
+                        <option value="Fish">Fish</option>
+                        <option value="Seafood">Seafood</option>
+                        <option value="Other">Other</option>
+                    </select>
+
+                    <label for="productPrice">Price (₹) *</label>
+                    <input type="number" id="productPrice" name="price"
+                           placeholder="Enter product price"
+                           min="0" step="0.01" required>
+
+                    <label for="productQuantity">Available Quantity *</label>
+                    <div class="quantity-input-group">
+                        <input type="number" id="productQuantity" name="quantity"
+                               placeholder="Enter available quantity"
+                               min="0" step="0.01" required>
+                        <select id="quantityUnit" name="quantity_unit" required>
+                            <option value="kg">Kilograms (kg)</option>
+                            <option value="grams">Grams (g)</option>
+                        </select>
+                    </div>
+
+                    <label for="productDiscount">Discount Percentage (%)</label>
+                    <input type="number"
+                           id="productDiscount"
+                           name="discount"
+                           placeholder="Enter discount percentage"
+                           min="0"
+                           max="100"
+                           step="1"
+                           value="0">
+
+                    <label for="offerPrice">Offer Price (₹)</label>
+                    <input type="text"
+                           id="offerPrice"
+                           readonly
+                           placeholder="Offer price will be calculated automatically">
+
+                    <label for="productDescription">Product Description</label>
+                    <textarea id="productDescription" name="description"
+                              rows="3" placeholder="Enter product details"></textarea>
+
+                    <label for="productImage">Product Image</label>
+                    <input type="file" id="productImage" name="image"
+                           accept=".png,.jpg,.jpeg,.webp,image/png,image/jpeg,image/webp">
+
+                    <div class="form-actions">
+                        <button type="submit" class="primary-btn">Save Product</button>
+                        <button type="button" id="cancelProductBtn"
+                                class="secondary-btn">Cancel</button>
+                    </div>
+
+                    <p id="productMessage" class="message" role="alert"></p>
+                </form>
+            </div>
+
+            <div id="productList" class="product-grid">
+                <!-- Products loaded using JavaScript -->
+            </div>
+        </section>
+
+
+        <!-- ORDERS -->
+        <section id="ordersPage" class="page-section hidden">
+            <div class="section-heading">
+                <div>
+                    <h2>My Orders</h2>
+                    <p>Track incoming customer orders and update fulfillment status.</p>
+                </div>
+            </div>
+
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Customer</th>
+                            <th>Phone</th>
+                            <th>Products</th>
+                            <th>Total Amount</th>
+                            <th>Status</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="orderList">
+                        <tr>
+                            <td colspan="7">No orders available.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- RIDER MANAGEMENT -->
+        <section id="ridersPage" class="page-section hidden">
+
+            <div class="section-heading">
+                <div>
+                    <h2>Rider Management</h2>
+                    <p>Register delivery partners and monitor active dispatches.</p>
+                </div>
+                <button type="button" class="secondary-btn" onclick="loadRiders()">
+                    Refresh
+                </button>
+            </div>
+
+            <div class="form-card">
+                <h3>Add Delivery Partner Details</h3>
+
+                <form id="riderForm">
+                    <label for="riderName">Rider Name *</label>
+                    <input type="text" id="riderName" placeholder="Rider Name" required>
+
+                    <label for="riderPhone">Phone Number *</label>
+                    <input type="tel" id="riderPhone" placeholder="10 Digit Mobile Number"
+                           maxlength="10" pattern="[0-9]{10}" required>
+
+                    <label for="vehicleNumber">Vehicle Number</label>
+                    <input type="text" id="vehicleNumber" placeholder="Vehicle Number">
+
+                    <label for="vehicleType">Vehicle Type</label>
+                    <select id="vehicleType">
+                        <option value="">Select Vehicle Type</option>
+                        <option value="Bike">Bike</option>
+                        <option value="Scooter">Scooter</option>
+                        <option value="Van">Van</option>
+                        <option value="Other">Other</option>
+                    </select>
+
+                    <button type="submit" class="primary-btn">Add Rider</button>
+                </form>
+
+                <p id="riderMessage" class="message"></p>
+            </div>
+
+            <h3 class="subsection-title">Available Riders</h3>
+            <div id="riderList" class="rider-grid">
+                Loading riders...
+            </div>
+
+            <h3 class="subsection-title">Delivery Tracking</h3>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Rider</th>
+                            <th>Phone</th>
+                            <th>Vehicle</th>
+                            <th>Status</th>
+                            <th>Update Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="riderAssignmentList">
+                        <tr>
+                            <td colspan="6">No deliveries available.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 class="subsection-title">Delivery History</h3>
+            <div id="deliveryHistory" class="rider-grid"></div>
+
+        </section>
+
+
+
+        <!-- CUSTOMER RETURNS -->
+        <section id="returnsPage" class="page-section hidden">
+            <div class="section-heading">
+                <div>
+                    <h2>Customer Returns</h2>
+                    <p>Review customer return requests, approve or reject them, and assign a rider for approved returns.</p>
+                </div>
+
+                <button type="button" id="refreshReturnsBtn"
+                        class="secondary-btn">
+                    Refresh
+                </button>
+            </div>
+
+            <div id="returnList" class="notification-list">
+                Loading return requests...
+            </div>
+        </section>
+
+
+        <!-- CUSTOMER REVIEWS -->
+        <section id="reviewsPage" class="page-section hidden">
+            <div class="section-heading">
+                <div>
+                    <h2>Customer Reviews</h2>
+                    <p>Read verified feedback from your FreshMeat customers.</p>
+                </div>
+
+                <button type="button" id="refreshReviewsBtn"
+                        class="secondary-btn">
+                    Refresh
+                </button>
+            </div>
+
+            <div id="reviewList" class="notification-list">
+                Loading customer reviews...
+            </div>
+        </section>
+
+
+        <!-- NOTIFICATIONS -->
+        <section id="notificationsPage" class="page-section hidden">
+            <div class="section-heading">
+                <div>
+                    <h2>Notifications</h2>
+                    <p>Stay up to date with order alerts, stock warnings, and account updates.</p>
+                </div>
+
+                <button type="button" id="markAllReadBtn"
+                        class="secondary-btn">
+                    Mark All as Read
+                </button>
+            </div>
+
+            <div id="notificationList" class="notification-list">
+                No notifications available.
+            </div>
+        </section>
+
+
+        <!-- PROFILE -->
+        <section id="profilePage" class="page-section hidden">
+            <div class="section-heading">
+                <div>
+                    <h2>My Profile</h2>
+                    <p>View your registered shop details and manage account security.</p>
+                </div>
+            </div>
+
+            <div id="profileDetails" class="profile-card">
+                Loading profile...
+            </div>
+
+            <div class="form-card password-card">
+                <h3>Change Password</h3>
+
+                <form id="passwordForm">
+                    <label for="currentPassword">Current Password *</label>
+                    <input type="password" id="currentPassword"
+                           name="current_password"
+                           autocomplete="current-password" required>
+
+                    <label for="newPassword">New Password *</label>
+                    <input type="password" id="newPassword"
+                           name="new_password" minlength="6"
+                           autocomplete="new-password" required>
+
+                    <label for="confirmPassword">Confirm New Password *</label>
+                    <input type="password" id="confirmPassword"
+                           name="confirm_password" minlength="6"
+                           autocomplete="new-password" required>
+
+                    <button type="submit" class="primary-btn">
+                        Change Password
+                    </button>
+
+                    <p id="passwordMessage" class="message" role="alert"></p>
+                </form>
+            </div>
+        </section>
+
+    </main>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

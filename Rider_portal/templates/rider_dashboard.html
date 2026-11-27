@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>FreshMeat | Rider Portal</title>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+<link rel="stylesheet" href="{{ url_for('static', filename='portal_theme.css') }}">
+</head>
+
+<body>
+
+<!-- BIKE RIDING INTRO SPLASH (LEFT TO RIGHT -> OPENS WEBSITE) -->
+
+<div id="fmBikeSplash" class="fm-bike-splash" aria-hidden="true">
+  <div class="fm-splash-brand">
+    <div class="fm-splash-badge">F</div>
+    <div class="fm-splash-title">FreshMeat</div>
+  </div>
+  <div class="fm-splash-sub">Delivery Partner Portal &bull; Express Dispatch</div>
+
+  <div class="fm-road-stage">
+    <div class="fm-road-line"></div>
+    <div class="fm-road-dashes"></div>
+
+    <div class="fm-bike-runner">
+      <svg class="fm-bike-svg" viewBox="0 0 240 130" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <g class="fm-speed-streak" stroke="#f3b587" stroke-width="2.5" stroke-linecap="round">
+          <line x1="6" y1="54" x2="36" y2="54"/>
+          <line x1="14" y1="68" x2="46" y2="68"/>
+          <line x1="2" y1="82" x2="30" y2="82" stroke="#f8f6ef" opacity="0.7"/>
+        </g>
+        <!-- FreshMeat Insulated Delivery Box -->
+        <rect x="48" y="42" width="42" height="34" rx="7" fill="#c87843" stroke="#f8f6ef" stroke-width="2"/>
+        <rect x="53" y="48" width="32" height="10" rx="3" fill="#173728"/>
+        <text x="69" y="55.5" fill="#f8f6ef" font-size="6.5" font-weight="800" text-anchor="middle" font-family="sans-serif">FRESH</text>
+        <!-- Rider Body & Jacket -->
+        <path d="M98 44 C106 42, 118 47, 124 58 L116 74 L94 72 Z" fill="#f8f6ef"/>
+        <path d="M114 50 L142 56" stroke="#f8f6ef" stroke-width="6.5" stroke-linecap="round"/>
+        <circle cx="144" cy="56" r="3.5" fill="#c87843"/>
+        <path d="M98 71 L112 86 L106 102" stroke="#173728" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+        <!-- Helmet -->
+        <circle cx="111" cy="29" r="13" fill="#c87843" stroke="#f8f6ef" stroke-width="2"/>
+        <path d="M113 24 L124 27 C124 32, 119 35, 113 34 Z" fill="#173728"/>
+        <!-- Bike Frame & Fork -->
+        <path d="M68 98 L96 75 L136 75 L154 62" stroke="#e8e6dc" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M94 75 L112 96 L138 96" stroke="#c87843" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <line x1="146" y1="53" x2="174" y2="98" stroke="#f8f6ef" stroke-width="4.5" stroke-linecap="round"/>
+        <!-- Headlight Beam -->
+        <polygon points="164,56 232,42 232,76 164,64" fill="url(#fmHeadlightGrad)" opacity="0.45"/>
+        <rect x="155" y="54" width="10" height="9" rx="3" fill="#fff7d6"/>
+        <!-- Exhaust -->
+        <circle cx="38" cy="95" r="4" fill="#f8f6ef" opacity="0.45"/>
+        <circle cx="26" cy="92" r="5.5" fill="#f8f6ef" opacity="0.25"/>
+        <!-- Rear Wheel -->
+        <g class="fm-wheel-spin">
+          <circle cx="68" cy="98" r="21" fill="#173728" stroke="#f8f6ef" stroke-width="4"/>
+          <circle cx="68" cy="98" r="9" fill="#c87843"/>
+          <line x1="68" y1="79" x2="68" y2="117" stroke="#e8e6dc" stroke-width="1.8"/>
+          <line x1="49" y1="98" x2="87" y2="98" stroke="#e8e6dc" stroke-width="1.8"/>
+        </g>
+        <!-- Front Wheel -->
+        <g class="fm-wheel-spin">
+          <circle cx="174" cy="98" r="21" fill="#173728" stroke="#f8f6ef" stroke-width="4"/>
+          <circle cx="174" cy="98" r="9" fill="#c87843"/>
+          <line x1="174" y1="79" x2="174" y2="117" stroke="#e8e6dc" stroke-width="1.8"/>
+          <line x1="155" y1="98" x2="193" y2="98" stroke="#e8e6dc" stroke-width="1.8"/>
+        </g>
+        <defs>
+          <linearGradient id="fmHeadlightGrad" x1="164" y1="60" x2="232" y2="60" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#fff4c2" stop-opacity="0.9"/>
+            <stop offset="100%" stop-color="#fff4c2" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+      </svg>
+    </div>
+  </div>
+
+  <div class="fm-splash-progress">
+    <div class="fm-splash-bar"></div>
+  </div>
+</div>
+
+<script>
+(function() {
+  function dismissBikeSplash() {
+    var splash = document.getElementById('fmBikeSplash');
+    if (splash && !splash.classList.contains('is-done')) {
+      splash.classList.add('is-done');
+      setTimeout(function() {
+        splash.style.display = 'none';
+      }, 500);
+    }
+  }
+
+  window.addEventListener('DOMContentLoaded', function() {
+    var splash = document.getElementById('fmBikeSplash');
+    var showSplash = sessionStorage.getItem('show_bike_animation');
+
+    if (showSplash === null || showSplash === 'yes') {
+      sessionStorage.setItem('show_bike_animation', 'no');
+      
+      setTimeout(dismissBikeSplash, 1400);
+      setTimeout(dismissBikeSplash, 2000);
+    } else {
+      if (splash) {
+        splash.style.display = 'none';
+      }
+    }
+  });
+})();
+function triggerBikeAnimation() {
+  sessionStorage.setItem('show_bike_animation', 'yes');
+}
+</script>
+
+
+
+<!-- SIDEBAR -->
+
+<aside class="sidebar">
+
+    <div class="brand">
+
+        <div class="brand-icon">F</div>
+
+        <div>
+            <div class="brand-name">FreshMeat</div>
+            <div class="portal">DELIVERY PORTAL</div>
+        </div>
+
+    </div>
+
+    <div class="nav-heading">WORKSPACE</div>
+
+    <a href="#dashboard" class="active">▦ Dashboard</a>
+
+    <a href="{{ url_for('assigned_orders') }}">▤ Assigned Orders</a>
+
+    <a href="{{ url_for('delivery_analytics') }}">
+    ▥ Delivery Analytics</a>
+    <a href="{{ url_for('rider_profile') }}">
+    ♙ My Profile</a>
+
+   
+
+    <div class="nav-heading">ACCOUNT</div>
+
+    <a href="{{ url_for('order_history') }}">
+    ◷ Order History</a>
+    <a href="{{ url_for('rider_notifications') }}">
+    ♧ Notifications</a>
+    <!-- Logout -->
+    <a href="{{ url_for('logout') }}">Logout</a>
+
+    
+
+    <div class="rider-info">
+
+        <strong>{{ rider.name }}</strong><br>
+
+        <small>Delivery Partner</small><br>
+
+        <small>● {{ rider.status }}</small>
+
+    </div>
+
+</aside>
+
+<!-- MAIN CONTENT -->
+
+<main class="main">
+
+<!-- DASHBOARD -->
+
+<section id="dashboard">
+
+    <div class="topbar">
+
+        <div>
+
+            <h2>Rider Dashboard</h2>
+
+            <p style="margin:0 0 6px">
+                Good morning, {{ rider.name }}! 👋
+            </p>
+
+            <small>
+                Here's your delivery activity and today's progress.
+            </small>
+
+        </div>
+
+        <span class="account">
+            Account: {{ rider.status }}
+        </span>
+
+    </div>
+
+
+    <!-- RIDER HERO BANNER -->
+    <div class="rider-hero-banner">
+        <div>
+            <div class="rider-hero-tag">FreshMeat Express Dispatch</div>
+            <h1 class="rider-hero-title">Welcome Rider, <span>{{ rider.name }}</span></h1>
+            <p class="rider-hero-desc">Delivering farm-fresh cuts safely and on time. Track your active dispatches, earnings, and daily performance below.</p>
+        </div>
+        <div class="rider-hero-art">
+            <div class="rider-hero-card">
+                <svg viewBox="0 0 210 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <line x1="10" y1="86" x2="200" y2="86" stroke="rgba(248,246,239,0.28)" stroke-width="2" stroke-dasharray="8 6"/>
+                    <rect x="44" y="34" width="34" height="26" rx="5" fill="#c87843" stroke="#f8f6ef" stroke-width="1.6"/>
+                    <path d="M84 36 C91 34, 100 38, 105 47 L98 60 L80 58 Z" fill="#f8f6ef"/>
+                    <circle cx="95" cy="23" r="10" fill="#c87843" stroke="#f8f6ef" stroke-width="1.6"/>
+                    <path d="M58 76 L82 58 L114 58 L128 47" stroke="#e8e6dc" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                    <line x1="122" y1="40" x2="144" y2="76" stroke="#f8f6ef" stroke-width="3.5" stroke-linecap="round"/>
+                    <circle cx="58" cy="76" r="15" fill="#173728" stroke="#f8f6ef" stroke-width="3"/>
+                    <circle cx="58" cy="76" r="6" fill="#c87843"/>
+                    <circle cx="144" cy="76" r="15" fill="#173728" stroke="#f8f6ef" stroke-width="3"/>
+                    <circle cx="144" cy="76" r="6" fill="#c87843"/>
+                </svg>
+                <span>On-Time Fresh Delivery</span>
+            </div>
+        </div>
+    </div>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+
+        {% for category, message in messages %}
+
+            <div class="flash">
+                {{ message }}
+            </div>
+
+        {% endfor %}
+
+    {% endwith %}
+
+    <div class="stats">
+
+        <div class="stat-card">
+            <p>Total Assigned Orders</p>
+            <h2>{{ total_assigned }}</h2>
+        </div>
+
+        <div class="stat-card">
+            <p>Pending Orders</p>
+            <h2>{{ pending_count }}</h2>
+        </div>
+
+        <div class="stat-card">
+            <p>Accepted Orders</p>
+            <h2>{{ accepted_count }}</h2>
+        </div>
+
+        <div class="stat-card">
+            <p>Delivered Orders</p>
+            <h2>{{ delivered_count }}</h2>
+        </div>
+
+        <div class="stat-card">
+            <p>Rejected Orders</p>
+            <h2>{{ rejected_count }}</h2>
+        </div>
+
+    </div>
+
+</section>
+
+<!-- DELIVERY ANALYTICS -->
+
+<section class="section" id="analytics">
+
+    <h2>Delivery Analytics</h2>
+
+    <p>
+        Track your delivery performance and order statistics.
+    </p>
+
+    <div class="analytics-summary">
+
+        <div class="analytics-card">
+
+            <p>Delivery Success Rate</p>
+
+            <h2>{{ success_rate }}%</h2>
+
+            <small>Percentage of all orders delivered</small>
+
+        </div>
+
+        <div class="analytics-card">
+
+            <p>Total Order Value</p>
+
+            <h2>₹{{ total_order_value }}</h2>
+
+            <small>Value of all assigned orders</small>
+
+        </div>
+
+        <div class="analytics-card">
+
+            <p>Delivered Order Value</p>
+
+            <h2>₹{{ delivered_value }}</h2>
+
+            <small>Value of completed deliveries</small>
+
+        </div>
+
+    </div>
+
+    <div class="charts-grid">
+
+        <div class="chart-card">
+
+            <h3>Order Status Distribution</h3>
+
+            <div class="chart-container">
+                <canvas id="orderPieChart"></canvas>
+            </div>
+
+        </div>
+
+        <div class="chart-card">
+
+            <h3>Food Items Breakdown</h3>
+
+            <div class="chart-container">
+                <canvas id="foodChart"></canvas>
+            </div>
+
+        </div>
+
+        <div class="chart-card full-chart">
+
+            <h3>Delivery Performance</h3>
+
+            <div class="chart-container">
+                <canvas id="performanceChart"></canvas>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ASSIGNED ORDERS -->
+
+<section class="section" id="orders">
+
+    <h2>Assigned Orders</h2>
+
+    <p>Review each order and update its delivery status.</p>
+
+    {% for order in orders %}
+
+    <div class="order-card">
+
+        <div class="order-header">
+
+            <h3>Order #{{ order.id }}</h3>
+
+            <span class="status {{ order.rider_status|lower }}">
+                {{ order.rider_status }}
+            </span>
+
+        </div>
+
+        <div class="details">
+
+            <div>
+                <small>Customer</small>
+                <p><strong>{{ order.customer }}</strong></p>
+            </div>
+
+            <div>
+                <small>Phone</small>
+                <p><strong>{{ order.phone }}</strong></p>
+            </div>
+
+            <div>
+                <small>Food</small>
+                <p><strong>{{ order.item }}</strong></p>
+            </div>
+
+            <div>
+                <small>Delivery Address</small>
+                <p><strong>{{ order.address }}</strong></p>
+            </div>
+
+            <div>
+                <small>Order Amount</small>
+                <p><strong>₹{{ order.amount }}</strong></p>
+            </div>
+
+            <div>
+                <small>Seller Status</small>
+                <p><strong>{{ order.seller_status }}</strong></p>
+            </div>
+
+            <div>
+                <small>Delivery Order Status</small>
+                <p><strong>{{ order.rider_status }}</strong></p>
+            </div>
+
+        </div>
+
+        <div class="actions">
+
+            <a class="action-link call"
+               href="tel:{{ order.phone }}">
+                ☎ Call Customer
+            </a>
+
+            <a class="action-link location"
+               target="_blank"
+               href="https://www.google.com/maps/search/?api=1&query={{ order.address|urlencode }}">
+                📍 View Location
+            </a>
+
+        </div>
+
+        {% if order.rider_status == "Pending" %}
+
+        <div class="actions">
+
+            <form method="POST"
+                  action="{{ url_for('accept_order', order_id=order.id) }}">
+
+                <button class="accept">
+                    ✓ Accept Order
+                </button>
+
+            </form>
+
+            <form method="POST"
+                  action="{{ url_for('reject_order', order_id=order.id) }}">
+
+                <input name="reason"
+                       placeholder="Rejection reason">
+
+                <button class="reject">
+                    ✕ Reject Order
+                </button>
+
+            </form>
+
+        </div>
+
+        {% elif order.rider_status == "Accepted" %}
+
+        <div style="margin-top:20px">
+
+            <h4>Ready for delivery</h4>
+
+            <p>
+                Order accepted. Complete the delivery once it reaches the customer.
+            </p>
+
+            <form method="POST"
+                  action="{{ url_for('deliver_order', order_id=order.id) }}">
+
+                <button class="deliver"
+                    onclick="return confirm('Confirm successful delivery?')">
+
+                    ✓ Deliver Order
+
+                </button>
+
+            </form>
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+    {% else %}
+
+    <p>No assigned orders available.</p>
+
+    {% endfor %}
+
+</section>
+
+<!-- ORDER HISTORY -->
+
+<section class="section" id="history">
+
+    <h2>Order History</h2>
+
+    <p>Your successfully completed deliveries.</p>
+
+    {% for order in history %}
+
+    <div class="order-card">
+
+        <div class="order-header">
+
+            <h3>
+                Order #{{ order.id }} – {{ order.customer }}
+            </h3>
+
+            <span class="status delivered">
+                Delivered
+            </span>
+
+        </div>
+
+        <p>{{ order.item }} · ₹{{ order.amount }}</p>
+
+        <p>Delivery Address: {{ order.address }}</p>
+
+        <strong style="color:#21834a">
+            ✓ Delivery successfully completed
+        </strong>
+
+    </div>
+
+    {% else %}
+
+    <p>No delivery history available.</p>
+
+    {% endfor %}
+
+</section>
+
+<!-- NOTIFICATIONS -->
+
+<section class="section" id="notifications">
+
+    <h2>Notifications</h2>
+
+    {% for notification in notifications %}
+
+    <div class="notification">
+
+        <strong>{{ notification.title }}</strong>
+
+        <p>{{ notification.message }}</p>
+
+        <small>{{ notification.date }}</small>
+
+    </div>
+
+    {% else %}
+
+    <p>No new notifications.</p>
+
+    {% endfor %}
+
+</section>
+
+<!-- PROFILE -->
+
+<section class="section" id="profile">
+
+    <h2>My Profile</h2>
+
+    <div class="profile-details">
+
+        <p><strong>Name:</strong> {{ rider.name }}</p>
+
+        <p><strong>Rider ID:</strong> {{ rider.id }}</p>
+
+        <p><strong>Phone:</strong> {{ rider.phone }}</p>
+
+        <p><strong>Vehicle:</strong> {{ rider.vehicle }}</p>
+
+        <p><strong>Account Status:</strong> {{ rider.status }}</p>
+
+    </div>
+
+</section>
+
+</main>
+
+<!-- CHARTS -->
+
+<script>
+
+const orderData = {{ chart_data | tojson }};
+
+const foodData = {{ food_chart | tojson }};
+
+const chartColors = [
+    "#c87843",
+    "#244b37",
+    "#3a7d58",
+    "#b83b32",
+    "#173728",
+    "#d99b66",
+    "#557a66",
+    "#8c9487"
+];
+
+// ORDER STATUS DOUGHNUT CHART
+
+new Chart(document.getElementById("orderPieChart"), {
+
+    type:"doughnut",
+
+    data:{
+        labels:orderData.labels,
+
+        datasets:[{
+            data:orderData.values,
+            backgroundColor:chartColors,
+            borderWidth:2
+        }]
+    },
+
+    options:{
+        responsive:true,
+        maintainAspectRatio:false,
+
+        plugins:{
+            legend:{
+                position:"bottom"
+            }
+        }
+    }
+
+});
+
+// FOOD ITEMS PIE CHART
+
+new Chart(document.getElementById("foodChart"), {
+
+    type:"pie",
+
+    data:{
+        labels:foodData.labels,
+
+        datasets:[{
+            data:foodData.values,
+            backgroundColor:chartColors,
+            borderWidth:2
+        }]
+    },
+
+    options:{
+        responsive:true,
+        maintainAspectRatio:false,
+
+        plugins:{
+            legend:{
+                position:"bottom"
+            }
+        }
+    }
+
+});
+
+// DELIVERY PERFORMANCE BAR CHART
+
+new Chart(document.getElementById("performanceChart"), {
+
+    type:"bar",
+
+    data:{
+        labels:orderData.labels,
+
+        datasets:[{
+            label:"Number of Orders",
+            data:orderData.values,
+            backgroundColor:chartColors,
+            borderRadius:7
+        }]
+    },
+
+    options:{
+        responsive:true,
+        maintainAspectRatio:false,
+
+        scales:{
+            y:{
+                beginAtZero:true,
+
+                ticks:{
+                    precision:0
+                }
+            }
+        },
+
+        plugins:{
+            legend:{
+                display:false
+            }
+        }
+    }
+
+});
+
+</script>
+
+</body>
+</html>

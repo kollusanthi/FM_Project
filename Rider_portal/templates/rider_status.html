@@ -1,0 +1,105 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rider Account Status</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #f4f6f8;
+        }
+
+        .status-card {
+            background: white;
+            width: 90%;
+            max-width: 450px;
+            padding: 40px 30px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.08);
+        }
+
+        h2 {
+            margin-bottom: 15px;
+        }
+
+        p {
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .pending {
+            color: #d97706;
+        }
+
+        .approved {
+            color: #15803d;
+        }
+
+        .rejected {
+            color: #dc2626;
+        }
+
+        a {
+            display: inline-block;
+            padding: 12px 25px;
+            background: #222;
+            color: white;
+            text-decoration: none;
+            border-radius: 7px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="status-card">
+
+        {% if rider.status == "Pending" %}
+
+            <h2 class="pending">Approval Pending</h2>
+            <p>
+                Hello {{ rider.name }}! Your Rider account registration
+                was successful. Please wait until the Admin approves
+                your account.
+            </p>
+
+        {% elif rider.status == "Approved" %}
+
+            <h2 class="approved">Account Approved!</h2>
+            <p>
+                Your account has been approved by Admin.
+                Please complete your document verification
+                to access your Rider dashboard.
+            </p>
+
+        {% elif rider.status == "Rejected" %}
+
+            <h2 class="rejected">Account Rejected</h2>
+            <p>
+                Unfortunately, your Rider account has been rejected
+                by Admin. Please contact the administrator.
+            </p>
+
+        {% endif %}
+
+        <a href="{{ url_for('logout') }}">Logout</a>
+
+    </div>
+
+</body>
+</html>
